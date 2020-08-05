@@ -1,0 +1,19 @@
+
+from pandas.io.json import json_normalize
+import requests 
+import json 
+import pandas as pd
+
+data  = 'https://atlas.ripe.net/api/v2/probes/?country_code__in=BJ'
+
+def Response (data):
+        #url  = 'https://atlas.ripe.net/api/v2/probes/?country_code__in=BJ'
+
+        res = requests.get('https://atlas.ripe.net/api/v2/probes/?country_code__in=bj')
+
+        j = res.json()
+
+        df = json_normalize(json.loads(res.content.decode('utf-8'))['results'],['country_code'],'status', errors='ignore')
+        return df
+Response(data)
+print(Response(data))
