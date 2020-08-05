@@ -3,17 +3,18 @@ from pandas.io.json import json_normalize
 import requests 
 import json 
 import pandas as pd
+#Les données à récupéré au niveau de l'api de rip atlas 
 
 data  = 'https://atlas.ripe.net/api/v2/probes/?country_code__in=BJ'
 
+# Récupéré les informations qui concerne le statutdes sondes au benin
+
 def Response (data):
-        #url  = 'https://atlas.ripe.net/api/v2/probes/?country_code__in=BJ'
-
-        res = requests.get('https://atlas.ripe.net/api/v2/probes/?country_code__in=bj')
-
+        res = requests.get(data)
         j = res.json()
-
         df = json_normalize(json.loads(res.content.decode('utf-8'))['results'],['country_code'],'status', errors='ignore')
         return df
 Response(data)
+
+#Affichage du résultats 
 print(Response(data))
